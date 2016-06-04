@@ -7,11 +7,15 @@ import static spark.SparkBase.staticFileLocation;
 public class Main {
 	
 	public static void main(String[] args) {
-		
-	    port(Integer.valueOf(System.getenv("PORT")));
+        port(getHerokuAssignedPort());
+        get("/hello", (req, res) -> "Hello Heroku World");
+    }
 
-	    staticFileLocation("/public");
-
-        get("/hello", (req, res) -> "Hello World");
-	}
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
 }
