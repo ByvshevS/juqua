@@ -1,12 +1,10 @@
 package juhesequa;
 
-import static spark.Spark.get;
-import static spark.SparkBase.port;
-import static spark.SparkBase.staticFileLocation;
+import static spark.Spark.*;
 
 public class Main {
-	
-	public static void main(String[] args) {
+
+    public static void main(String[] args) {
         port(getHerokuAssignedPort());
         get("/hello", (req, res) -> "Hello Heroku World");
     }
@@ -18,4 +16,5 @@ public class Main {
         }
         return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
+
 }
